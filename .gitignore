@@ -24,5 +24,4 @@ coverage
 build/
 mocks/
 
-chrisdata5.csv
-chrisdata.csv
+*.csv
