@@ -8,7 +8,7 @@ async function dataGenerate() {
 		encoding: 'utf8',
 		flag: 'a'
 	});
-	const write2 = fs.createWriteStream('../photos-sql1.csv', {
+	const write2 = fs.createWriteStream('/Volumes/Samsung_T5/photos-sql1.csv', {
 		encoding: 'utf8',
 		flag: 'a'
 	});
@@ -26,7 +26,7 @@ async function dataGenerate() {
 		}
 	
 	write2.write('id, description, url, isverified, date, listing_id\n');
-	for (let x = 1; x <= 10; x++) {
+	for (let x = 1; x <= 275000000; x++) {
 		const ableToWrite2 = write2.write(
 			(x + '|' + faker.lorem.sentence() + '|' + `https://exzerone-photos.s3.amazonaws.com/img-${randomNum(1, 1085)}.webp` + '|' + faker.random.boolean() + '|' +  faker.date.past() + '|' + randomNum(1, 10000000) + '\n' ));
 		if (!ableToWrite2) {
