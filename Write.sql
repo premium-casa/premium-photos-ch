@@ -1,0 +1,11 @@
+\timing
+insert into photos (id, description, url, isverified, date, listing_id) values(275000001, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000002, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000003, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000004, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000005, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000006, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000007, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000008, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000009, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
+insert into photos (id, description, url, isverified, date, listing_id) values(275000010, 'beautiful dresser', 'https://exzerone-photos.s3.amazonaws.com/img-65.webp', false, 'Fri Nov 09 2018 09:08:37 GMT-0800 (PST)', 8578157);
