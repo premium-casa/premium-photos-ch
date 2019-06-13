@@ -75,6 +75,51 @@ const getPhotos = (targetId, callback) => {
 		});
 };
 
+const deletePhotos = (photoId, callback) => {
+	pool
+		.query(`delete from photos where id=${photoId}`)
+		.then((res) => {
+			callback(null, 'Successfully Deleted Data from Database');
+		})
+		.catch((err) => {
+			callback(err);
+		});
+};
+
+const addPhotos = (data, callback) => {
+	const query = {
+		text:'insert into photos (id, room_description, url, isverified, date, listing_id) values ($1, $2, $3, $4, $5, $6)',
+		values : [data.id, data.room_description, data.url, data.isverified, data.date, data.listing_id]
+	}
+	pool
+	.query(query)
+	.then((res)=>{
+		callback(null, 'Successfully Inserted Data to Database')
+	})
+	.catch((err)=>{
+		callback(err)
+	})
+}
+
+const updatePhotos = (data, callback) => {
+	const query = {
+		text: 'update photos set url = $1 where id=$2;',
+		values: [data.url, data.id]
+	}
+	pool
+	.query(query)
+	.then((res)=>{
+		callback(null, 'Your data has been successfully updated')
+	})
+	.catch(err=>{
+		callback(err)
+	})
+}
+
+
 module.exports = {
-	getPhotos
+	getPhotos,
+	deletePhotos,
+	addPhotos,
+	updatePhotos
 };

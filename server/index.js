@@ -23,37 +23,38 @@ app.get('/photos/:listingID', (req, res) => {
 	});
 });
 
-app.post('/photos/:listingID', (req, res) => {
-	const targetID = req.params.listingID;
-	db.getPhotos(targetID, (err, photos) => {
+app.delete('/:photoId', (req, res) => {
+	const photoID = req.params.photoId;
+	db.deletePhotos(photoID, (err, result) => {
 		if (err) {
 			res.status(500).send();
 		} else {
-			res.status(200).send(photos);
+			res.status(200).send('Photo has successfully been deleted');
 		}
 	});
 });
 
-app.delete('/photos/:listingID', (req, res) => {
-	const targetID = req.params.listingID;
-	db.getPhotos(targetID, (err, photos) => {
+app.post('/:listingId', (req, res) => {
+	const data = req.body;
+	db.addPhotos(data, (err, result) => {
 		if (err) {
 			res.status(500).send();
 		} else {
-			res.status(200).send(photos);
+			res.status(200).send(result);
 		}
 	});
 });
 
-app.put('/photos/:listingID', (req, res) => {
-	const targetID = req.params.listingID;
-	db.getPhotos(targetID, (err, photos) => {
+app.put('/:listingId', (req, res)=>{
+	const data = req.body;
+	db.updatePhotos(data, (err, result)=>{
 		if (err) {
 			res.status(500).send();
 		} else {
-			res.status(200).send(photos);
+			res.status(200).send(result)
 		}
-	});
-});
+	})
+})
+
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}!`));
