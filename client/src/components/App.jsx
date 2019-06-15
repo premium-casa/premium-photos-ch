@@ -47,11 +47,14 @@ class App extends Component {
 		axios
 			.get(`/photos/${window.location.href.match(/id\s*=\s*(.*)/)[1]}`)
 			.then((response) => {
-				console.log(response);
+				console.log('this is response',response);
 				const listingObj = response.data;
-				const { listingDesc } = listingObj;
-				const { listingPhotos } = listingObj;
-				const { isSaved } = listingObj;
+				const listingDesc = listingObj.listingDesc;
+				let listingPhotos = listingObj.listingPhotos;
+				if (typeof listingObj.listingPhotos === 'string') {
+					listingPhotos = JSON.parse(listingObj.listingPhotos)
+				}
+				const isSaved = JSON.parse(listingObj.issaved);
 				this.setState({
 					listingDesc,
 					listingPhotos,

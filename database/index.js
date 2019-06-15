@@ -29,50 +29,92 @@
 //   getPhotos,
 // };
 
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
 	user: 'Chris',
 	host: 'localhost',
 	database: 'photos',
-	password: '',
 	port: 5432
 });
 
-pool.connect();
-pool
-	.query('SELECT NOW()')
-	.then((res) => {
-		console.log('Successfully connected to postgres database!');
-	})
-	.catch((err) => {
-		console.log(
-			'There is an error connecting to postgresql with error: ' + err
-		);
-	});
+pool.query('SELECT NOW()', (err, res) => {
+	if (err) {
+		console.log(err);
+	}
+	console.log('Successfully connected to postgres database!');
+});
+
+// const getPhotos = (req, res) => {
+// 	pool.query(
+// 		`select description, issaved, room_description, url, isverified from listing inner join photos on listing.id=photos.listing_id and listing.id=${
+// 			req.params.listingId
+// 		};`,
+// 		(err, result) => {
+// 			if (err) {
+// 				res.status(404).send(err);
+// 			}
+// 			let data = {};
+// 			data.listingDesc = result.rows[0].description;
+// 			data.isSaved = JSON.parse(result.rows[0].issaved);
+// 			data.listingPhotos = [];
+// 			result.rows.forEach((listing) => {
+// 				data.listingPhotos.push({
+// 					url: listing.url,
+// 					desc: listing.room_description,
+// 					isVerified: JSON.parse(listing.isverified)
+// 				});
+// 			});
+// 			res.status(200).send(data);
+// 		}
+// 	);
+// };
 
 const getPhotos = (targetId, callback) => {
-	pool
-		.query(
-			`select * from listing inner join photos on listing.id=photos.listing_id and listing.id=${targetId};`
-		)
-		.then((res) => {
+	pool.query(
+		`select description, issaved, room_description, url, isverified from listing inner join photos on listing.id=photos.listing_id and listing.id=${
+			targetId
+		};`,
+		(err, result) => {
+			if (err) {
+				callback(err)
+			}
 			let data = {};
-			data.listingDesc = res.rows[0].description;
-			data.isSaved = JSON.parse(res.rows[0].issaved);
+			data.listingDesc = result.rows[0].description;
+			data.issaved = result.rows[0].issaved;
 			data.listingPhotos = [];
-			res.rows.forEach((listing) => {
+			result.rows.forEach((listing) => {
 				data.listingPhotos.push({
 					url: listing.url,
 					desc: listing.room_description,
-					isVerified: JSON.parse(listing.isverified)
+					isVerified: listing.isverified
 				});
 			});
-			callback(null, data);
-		})
-		.catch((err) => {
-			callback(err);
-		});
+			callback(null,data)
+		}
+	);
+};
+
+const addPhotos = (req, res) => {
+	const data = req.body;
+	const query = {
+		text:
+			'insert into photos (id, room_description, url, isverified, date, listing_id) values ($1, $2, $3, $4, $5, $6)',
+		values: [
+			data.id,
+			data.room_description,
+			data.url,
+			data.isverified,
+			data.date,
+			data.listing_id
+		]
+	};
+	pool.query(query, (err, result)=>{
+		if (err) {
+			res.status(404).send();
+		}
+		res.status(200).send(result);
+	})
 };
 
 const deletePhotos = (photoId, callback) => {
@@ -86,36 +128,20 @@ const deletePhotos = (photoId, callback) => {
 		});
 };
 
-const addPhotos = (data, callback) => {
-	const query = {
-		text:'insert into photos (id, room_description, url, isverified, date, listing_id) values ($1, $2, $3, $4, $5, $6)',
-		values : [data.id, data.room_description, data.url, data.isverified, data.date, data.listing_id]
-	}
-	pool
-	.query(query)
-	.then((res)=>{
-		callback(null, 'Successfully Inserted Data to Database')
-	})
-	.catch((err)=>{
-		callback(err)
-	})
-}
-
 const updatePhotos = (data, callback) => {
 	const query = {
 		text: 'update photos set url = $1 where id=$2;',
 		values: [data.url, data.id]
-	}
+	};
 	pool
-	.query(query)
-	.then((res)=>{
-		callback(null, 'Your data has been successfully updated')
-	})
-	.catch(err=>{
-		callback(err)
-	})
-}
-
+		.query(query)
+		.then((res) => {
+			callback(null, 'Your data has been successfully updated');
+		})
+		.catch((err) => {
+			callback(err);
+		});
+};
 
 module.exports = {
 	getPhotos,

@@ -25,3 +25,9 @@ build/
 mocks/
 
 *.csv
+newrelic.js
+dump.rdb
+index-pm2.json
+script.js
+write.js
+public/dist/bundle.js
