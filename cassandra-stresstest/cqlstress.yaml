@@ -1,0 +1,32 @@
+keyspace: photos
+
+table: test
+
+table_definition: 
+  create table test (
+    id int primary key, 
+    issaved varchar, 
+    listingdesc varchar, 
+    photos varchar
+  );
+
+columnspec:
+  - name: id
+    size: uniform(1..5) 
+    population: uniform(999..1000) 
+  - name: issaved
+    cluster: uniform(4..5) 
+  - name: listingdesc
+    size: uniform(5..10)
+  - name: photos
+    size: uniform(5..600)
+
+insert:
+  partitions: fixed(10) 
+  select: fixed(1)/500 
+  batchtype: UNLOGGED   
+
+queries:
+  read1:
+    cql: select * from listings where id = ?
+    fields: multirow   
