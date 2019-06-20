@@ -76,21 +76,21 @@ const getPhotos = (targetId, callback) => {
 			targetId
 		};`,
 		(err, result) => {
-			if (err) {
-				callback(err)
-			}
-			let data = {};
-			data.listingDesc = result.rows[0].description;
-			data.issaved = result.rows[0].issaved;
-			data.listingPhotos = [];
-			result.rows.forEach((listing) => {
-				data.listingPhotos.push({
-					url: listing.url,
-					desc: listing.room_description,
-					isVerified: listing.isverified
-				});
-			});
-			callback(null,data)
+			// if (err) {
+			// 	callback(err)
+			// }
+			// let data = {};
+			// data.listingDesc = result.rows[0].description;
+			// data.issaved = result.rows[0].issaved;
+			// data.listingPhotos = [];
+			// result.rows.forEach((listing) => {
+			// 	data.listingPhotos.push({
+			// 		url: listing.url,
+			// 		desc: listing.room_description,
+			// 		isVerified: listing.isverified
+			// 	});
+			// });
+			callback(null,result)
 		}
 	);
 };

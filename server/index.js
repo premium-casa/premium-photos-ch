@@ -24,25 +24,40 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/photos/:listingId', (req, res) => {
-	return client.hgetall(req.params.listingId, (err, result) => {
+	client.get(req.params.listingId, (err, result) => {
 		if (result) {
-			// console.log('cached');
-			return res.status(200).send(result);
+			res.status.length(200).send(JSON.parse(reuslt));
 		} else {
-			postgres.getPhotos(req.params.listingId, (err, result) => {
+			postgres.getPhotos(req.params.listingId, (err, results) => {
 				if (err) {
 					res.status(404).send();
+				} else {
+					client.set(req.params.listingId, JSON.stringify(results), () => {
+						res.status(200).send(results);
+					});
 				}
-				client.hmset(req.params.listingId, {
-					'issaved': result.issaved,
-					'listingDesc': result.listingDesc,
-					'listingPhotos': JSON.stringify(result.listingPhotos)
-				})
-				// console.log('uncached result', result);
-				res.status(200).send(result);
 			});
 		}
 	});
+	// client.hgetall(req.params.listingId, (err, result) => {
+	// 	if (result) {
+	// 		// console.log('cached');
+	// 		return res.status(200).send(result);
+	// 	} else {
+	// 		postgres.getPhotos(req.params.listingId, (err, result) => {
+	// 			if (err) {
+	// 				res.status(404).send();
+	// 			}
+	// 			client.hmset(req.params.listingId, {
+	// 				issaved: result.issaved,
+	// 				listingDesc: result.listingDesc,
+	// 				listingPhotos: JSON.stringify(result.listingPhotos)
+	// 			});
+	// 			// console.log('uncached result', result);
+	// 			res.status(200).send(result);
+	// 		});
+	// 	}
+	// });
 });
 
 app.post('/photos', postgres.addPhotos);
